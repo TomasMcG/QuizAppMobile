@@ -5,18 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.quizappmobile2.ui.theme.QuizAppMobile2Theme
+import com.example.quizappmobile2.persistence.GsonHelper
 import com.example.quizappmobile2.view.CrudActivity
 import controllers.RoundAPI
-import org.w3c.dom.Text
 import persistence.XMLSerializer
 
 class MainActivity : ComponentActivity() {
@@ -40,8 +31,8 @@ class MainActivity : ComponentActivity() {
 
         val resources = resources // Assuming you are in an Activity or a Context
         val xmlResourceId = R.xml.rounds // Replace with the actual resource ID of your XML file
-
-        val xmlSerializer = XMLSerializer(resources, xmlResourceId)
+        val loadedRounds = GsonHelper.loadRoundsArray(this)
+        val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
         val roundAPI = RoundAPI(xmlSerializer)
         val result = roundAPI.listAllRounds()
 

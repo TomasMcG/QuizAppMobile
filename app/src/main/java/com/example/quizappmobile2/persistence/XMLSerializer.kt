@@ -3,6 +3,7 @@ package persistence
 import android.content.res.Resources
 import com.thoughtworks.xstream.XStream
 import com.thoughtworks.xstream.io.xml.DomDriver
+import models.Rounds
 import java.io.InputStreamReader
 import java.io.Reader
 import kotlin.Throws
@@ -19,7 +20,11 @@ import java.io.FileWriter
  * @param resources The Resources object for accessing app resources.
  * @param xmlResourceId The resource ID of the XML file to read from or write to during serialization and deserialization.
  */
-class XMLSerializer(private val resources: Resources, private val xmlResourceId: Int) : Serializer {
+class XMLSerializer(
+    private val resources: Resources,
+    private val xmlResourceId: Int,
+    loadedRounds: List<Rounds>
+) : Serializer {
     /**
      * Read an object from the XML file and return it.
      *

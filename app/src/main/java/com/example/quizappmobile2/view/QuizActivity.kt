@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.example.quizappmobile2.controllers.XMLParser
+import com.example.quizappmobile2.persistence.GsonHelper
 import controllers.RoundAPI
 import persistence.XMLSerializer
-import java.io.File
 
 class QuizActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +31,8 @@ class QuizActivity : AppCompatActivity() {
         */
         val resources = resources // Assuming you are in an Activity or a Context
         val xmlResourceId = R.xml.rounds // Replace with the actual resource ID of your XML file
-
-        val xmlSerializer = XMLSerializer(resources, xmlResourceId)
+        val loadedRounds = GsonHelper.loadRoundsArray(this)
+        val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
         val roundAPI = RoundAPI(xmlSerializer)
         val result = roundAPI.listAllRounds()
 

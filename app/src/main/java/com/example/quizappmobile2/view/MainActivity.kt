@@ -2,6 +2,7 @@ package com.example.quizappmobile2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -32,12 +33,15 @@ class MainActivity : ComponentActivity() {
         val resources = resources // Assuming you are in an Activity or a Context
         val xmlResourceId = R.xml.rounds // Replace with the actual resource ID of your XML file
         val loadedRounds = GsonHelper.loadRoundsArray(this)
-        val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
-        val roundAPI = RoundAPI(xmlSerializer)
-        val result = roundAPI.listAllRounds()
+        Log.d("MainActivity", "Loaded Rounds: $loadedRounds")
+        if(loadedRounds != null) {
+            val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
+            val roundAPI = RoundAPI(xmlSerializer)
+            val result = roundAPI.listAllRounds()
+            Log.d("MainActivity", "Result from listAllRounds(): $result")
 
-        textbox.text = result
-
+            textbox.text = result
+        }
         quizButton.setOnClickListener{
 //        textbox.text = "button was pressed."
 

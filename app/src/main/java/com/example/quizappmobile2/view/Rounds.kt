@@ -19,10 +19,10 @@ class Rounds : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rounds)
+        setContentView(R.layout.activity_rounds)}}
 
         // Initialize RoundAPI with loaded data from Gson
-        val loadedRounds = GsonHelper.loadRoundsArray(this)
+        /*val loadedRounds = GsonHelper.loadRoundsArray(this)
         roundAPI = RoundAPI(XMLSerializer(resources, R.xml.rounds, loadedRounds))
 
         val textbox = findViewById<EditText>(R.id.roundIdBox)

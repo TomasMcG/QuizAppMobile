@@ -1,17 +1,18 @@
 package com.example.quizappmobile2
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import com.example.quizappmobile2.view.CrudActivity
+import com.example.quizappmobile2.view.Rounds
 import controllers.RoundAPI
 
 import persistence.XMLSerializer
-import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
-import java.io.OutputStream
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +32,19 @@ class MainActivity : ComponentActivity() {
 
         val crudButton = findViewById<Button>(R.id.CRUDbutton)
         val quizButton = findViewById<Button>(R.id.playQuizButton)
+        val fileName = "rounds.xml"
+
+        val inputStream: InputStream = resources.assets.open(fileName)
+        val outputStream: FileOutputStream = openFileOutput("example.txt", Context.MODE_PRIVATE)
+        lateinit var rounds: RoundAPI
+        try {
+            val xmlSerializer = XMLSerializer(inputStream, outputStream)
+             rounds = RoundAPI(xmlSerializer.read())
+        } finally {
+            inputStream.close()
+            outputStream.close()
+        }
+
 
        /* val resources = resources // Assuming you are in an Activity or a Context
         val xmlResourceId = R.xml.rounds // Replace with the actual resource ID of your XML file
@@ -44,9 +58,9 @@ class MainActivity : ComponentActivity() {
 
             textbox.text = result
         }*/
-        val inputStream: InputStream = resources.assets.open("rounds.xml")
+        //val inputStream: InputStream = resources.assets.open("rounds.xml")
         //val outputStream: OutputStream = resources.assets.open("rounds.xml")/* obtain output stream from somewhere */
-        val rounds = XMLSerializer(inputStream).read()
+        //val rounds = XMLSerializer(inputStream).read()
 
 //        val rounds = RoundAPI(XMLSerializer(File("src/main/assets/rounds.xml")))
         val textViewResult: TextView = findViewById(R.id.textView)

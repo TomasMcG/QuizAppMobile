@@ -66,7 +66,7 @@ import java.io.*
  *
  * @param inputStream The input stream to read from during deserialization.
  */
-class XMLSerializer(private val inputStream: InputStream/*, private val outputStream: OutputStream*/) : Serializer {
+class XMLSerializer(private val inputStream: InputStream, private val outputStream: OutputStream) : Serializer {
     /**
      * Read an object from the XML file and return it.
      *
@@ -90,11 +90,11 @@ class XMLSerializer(private val inputStream: InputStream/*, private val outputSt
      * @param obj The object to be serialized and written to the file.
      * @throws Exception if there is an error during serialization and writing.
      */
-    /*@Throws(Exception::class)
+    @Throws(Exception::class)
     override fun write(obj: Any?) {
         val xStream = XStream(DomDriver())
         val writer = BufferedWriter(OutputStreamWriter(outputStream))
         xStream.toXML(obj, writer)
         writer.close()
     }
-}*/
+}

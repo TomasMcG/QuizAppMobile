@@ -34,11 +34,13 @@ class QuizActivity : AppCompatActivity() {
         val loadedRounds = GsonHelper.loadRoundsArray(this)
         val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
         val roundAPI = RoundAPI(xmlSerializer)*/
-        val rounds = RoundAPI(XMLSerializer(File("src/main/assets/rounds.xml")))
-        val result = rounds.listAllRounds()
+
+
+        //val rounds = RoundAPI(XMLSerializer(File("src/main/assets/rounds.xml")))
+        //val result = rounds.listAllRounds()
 
         val textViewResult: TextView = findViewById(R.id.textView2)
-        textViewResult.text = result
+        //textViewResult.text = result
     }
 
 }

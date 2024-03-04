@@ -1,15 +1,8 @@
 package controllers
 
-import com.example.quizappmobile2.R
-import com.example.quizappmobile2.persistence.GsonHelper
-import models.Questions
 import models.Rounds
 import persistence.Serializer
 import utils.Utilities.formatListString
-import utils.Utilities.formatSetString
-import java.io.File
-import java.io.InputStream
-
 
 
 /**
@@ -20,9 +13,9 @@ import java.io.InputStream
  *
  * @property serializerType The type of serializer to use for reading and writing rounds.
  */
-class RoundAPI (serializerType: Serializer) {
+class RoundAPI(serializerType: Any) {
 
-    private var serializer: Serializer = serializerType
+    private var serializer =  serializerType
     private var rounds = ArrayList<Rounds>()
     private var lastId = 1
 
@@ -180,7 +173,9 @@ class RoundAPI (serializerType: Serializer) {
      *
      * @throws Exception if there is an issue during the loading process.
      */
+   /*
     @Throws(Exception::class)
+
     fun load() {
         rounds = serializer.read() as ArrayList<Rounds>
     }
@@ -197,6 +192,7 @@ class RoundAPI (serializerType: Serializer) {
     fun store() {
         serializer.write(rounds)
     }
+    */
 
 
     fun getRounds(): List<Rounds> {

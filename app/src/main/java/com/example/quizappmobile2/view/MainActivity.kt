@@ -1,15 +1,18 @@
 package com.example.quizappmobile2
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import com.example.quizappmobile2.persistence.GsonHelper
 import com.example.quizappmobile2.view.CrudActivity
+import com.example.quizappmobile2.view.Rounds
 import controllers.RoundAPI
+
 import persistence.XMLSerializer
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,11 +29,24 @@ class MainActivity : ComponentActivity() {
             }*/
         setContentView(R.layout.activity_main)
 
-        val textbox = findViewById<TextView>(R.id.textView)
+
         val crudButton = findViewById<Button>(R.id.CRUDbutton)
         val quizButton = findViewById<Button>(R.id.playQuizButton)
+        val fileName = "rounds.xml"
 
-        val resources = resources // Assuming you are in an Activity or a Context
+        val inputStream: InputStream = resources.assets.open(fileName)
+        val outputStream: FileOutputStream = openFileOutput("example.txt", Context.MODE_PRIVATE)
+        lateinit var rounds: RoundAPI
+        try {
+            val xmlSerializer = XMLSerializer(inputStream, outputStream)
+             rounds = RoundAPI(xmlSerializer.read())
+        } finally {
+            inputStream.close()
+            outputStream.close()
+        }
+
+
+       /* val resources = resources // Assuming you are in an Activity or a Context
         val xmlResourceId = R.xml.rounds // Replace with the actual resource ID of your XML file
         val loadedRounds = GsonHelper.loadRoundsArray(this)
         Log.d("MainActivity", "Loaded Rounds: $loadedRounds")
@@ -41,7 +57,15 @@ class MainActivity : ComponentActivity() {
             Log.d("MainActivity", "Result from listAllRounds(): $result")
 
             textbox.text = result
-        }
+        }*/
+        //val inputStream: InputStream = resources.assets.open("rounds.xml")
+        //val outputStream: OutputStream = resources.assets.open("rounds.xml")/* obtain output stream from somewhere */
+        //val rounds = XMLSerializer(inputStream).read()
+
+//        val rounds = RoundAPI(XMLSerializer(File("src/main/assets/rounds.xml")))
+        val textViewResult: TextView = findViewById(R.id.textView)
+        textViewResult.text = rounds.listAllRounds()
+
         quizButton.setOnClickListener{
 //        textbox.text = "button was pressed."
 

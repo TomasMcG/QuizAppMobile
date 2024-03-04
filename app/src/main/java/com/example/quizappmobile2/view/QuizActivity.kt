@@ -6,6 +6,8 @@ import android.widget.TextView
 import com.example.quizappmobile2.controllers.XMLParser
 import com.example.quizappmobile2.persistence.GsonHelper
 import controllers.RoundAPI
+import models.Questions
+import models.Rounds
 import persistence.XMLSerializer
 
 class QuizActivity : AppCompatActivity() {
@@ -34,10 +36,25 @@ class QuizActivity : AppCompatActivity() {
         val loadedRounds = GsonHelper.loadRoundsArray(this)
         val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
         val roundAPI = RoundAPI(xmlSerializer)
-        val result = roundAPI.listAllRounds()
+        fillData(roundAPI)
 
+        val result = roundAPI.listAllRounds()
         val textViewResult: TextView = findViewById(R.id.textView2)
         textViewResult.text = result
+    }
+
+    fun fillData(roundAPI: RoundAPI){
+        roundAPI.add(Rounds(roundId= 1, roundTitle = "Geography Round"))
+        roundAPI.add(Rounds(roundId= 2,roundTitle = "television Round"))
+        var round = roundAPI.findRounds(1)
+        // val chosenRound = askUserToChooseRoundByTitle()
+        val possibleAnswers:List<String> = listOf("Waterford","Tipperary","Limerick")
+        round?.addQuestion(Questions(1, "Which of the following counties is coastal:", possibleAnswers, "Waterford", "Easy"))
+
+
+        round = roundAPI.findRounds(2)
+        round?.addQuestion(Questions(2, "What city is the capital of Ireland:", listOf("Dublin City","Cork City","Waterford City"), "Dublin City", "Easy"))
+
     }
 
 }

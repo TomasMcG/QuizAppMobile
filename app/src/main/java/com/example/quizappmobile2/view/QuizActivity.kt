@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.example.quizappmobile2.controllers.XMLParser
 import com.example.quizappmobile2.persistence.GsonHelper
 import controllers.RoundAPI
+import models.Rounds
 import persistence.XMLSerializer
 
 class QuizActivity : AppCompatActivity() {
@@ -22,18 +23,17 @@ class QuizActivity : AppCompatActivity() {
 
         val xmlParser = XMLParser()
         xmlParser.parseXml(resources, R.xml.rounds)
-        /*val inputStream = resources.openRawResource(R.xml.rounds)
-        val roundAPI = RoundAPI(XMLSerializer(inputStream))*/
-        //res contains input streams not files.
-        //val roundAPI = RoundAPI(XMLSerializer(File("rounds.xml")))
-        /*val xmlResource = resources.getXml(R.xml.rounds)
-        val roundAPI = RoundAPI(XMLSerializer(xmlResource))
-        */
+
         val resources = resources // Assuming you are in an Activity or a Context
         val xmlResourceId = R.xml.rounds // Replace with the actual resource ID of your XML file
         val loadedRounds = GsonHelper.loadRoundsArray(this)
         val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
         val roundAPI = RoundAPI(xmlSerializer)
+
+
+                roundAPI.add(Rounds(roundTitle = "1"))
+        roundAPI.add(Rounds(roundTitle = "2"))
+
         val result = roundAPI.listAllRounds()
 
         val textViewResult: TextView = findViewById(R.id.textView2)

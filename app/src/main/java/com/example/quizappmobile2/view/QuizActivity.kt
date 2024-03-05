@@ -41,7 +41,8 @@ class QuizActivity : AppCompatActivity() {
         val roundAPI = RoundAPI(xmlSerializer)
         fillData(roundAPI)
 
-        val chooseRound = findViewById<TextView>(R.id.enterRoundIdBox)
+        val chooseRoundBox = findViewById<TextView>(R.id.enterRoundIdBox)
+        val chosenRound = roundAPI.findRounds(chooseRoundBox.parseInt)
         val chooseRoundButton = findViewById<Button>(R.id.selectRound)
         val correctAnswer = findViewById<TextView>(R.id.correctAnswerBox)
         val correctAnswerButton = findViewById<Button>(R.id.confirmButton)

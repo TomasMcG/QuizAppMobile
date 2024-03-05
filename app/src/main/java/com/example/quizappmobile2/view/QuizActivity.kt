@@ -3,7 +3,6 @@ package com.example.quizappmobile2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.example.quizappmobile2.controllers.XMLParser
 import com.example.quizappmobile2.persistence.GsonHelper
 import controllers.RoundAPI
 import models.Questions
@@ -22,15 +21,18 @@ class QuizActivity : AppCompatActivity() {
                 "To get started on the quiz please choose a round to try out\n" +
                 "--------------------------------------------------------------------------------------"
 
-        val xmlParser = XMLParser()
+        /*val xmlParser = XMLParser()
         xmlParser.parseXml(resources, R.xml.rounds)
-        /*val inputStream = resources.openRawResource(R.xml.rounds)
+        val inputStream = resources.openRawResource(R.xml.rounds)
         val roundAPI = RoundAPI(XMLSerializer(inputStream))*/
         //res contains input streams not files.
         //val roundAPI = RoundAPI(XMLSerializer(File("rounds.xml")))
         /*val xmlResource = resources.getXml(R.xml.rounds)
-        val roundAPI = RoundAPI(XMLSerializer(xmlResource))
-        */
+        val roundAPI = RoundAPI(XMLSerializer(xmlResource)
+         */
+
+
+
         val resources = resources // Assuming you are in an Activity or a Context
         val xmlResourceId = R.xml.rounds // Replace with the actual resource ID of your XML file
         val loadedRounds = GsonHelper.loadRoundsArray(this)

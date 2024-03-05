@@ -1,16 +1,12 @@
 package persistence
 
+import android.content.res.Resources
 import com.thoughtworks.xstream.XStream
 import com.thoughtworks.xstream.io.xml.DomDriver
-import java.io.BufferedReader
-import java.io.BufferedWriter
 import kotlin.Throws
 import java.lang.Exception
-import java.io.FileReader
 import java.io.FileWriter
-import java.io.InputStream
 import java.io.InputStreamReader
-import java.io.OutputStreamWriter
 
 /**
  * A serializer implementation that uses XML for object serialization and deserialization.
@@ -66,8 +62,11 @@ import java.io.*
  *
  * @param inputStream The input stream to read from during deserialization.
  */
-class XMLSerializer(private val inputStream: InputStream, private val outputStream: OutputStream) : Serializer {
-    /**
+class XMLSerializer(
+    private val resources: Resources,
+    private val xmlResourceId: Int,
+    loadedRounds: List<models.Rounds>
+) : Serializer {  /**
      * Read an object from the XML file and return it.
      *
      * @return The deserialized object.
@@ -78,7 +77,8 @@ class XMLSerializer(private val inputStream: InputStream, private val outputStre
         val xStream = XStream(DomDriver())
         xStream.allowTypes(arrayOf(Any::class.java))
         xStream.allowTypesByWildcard(arrayOf("models.*"))
-        val reader = BufferedReader(InputStreamReader(inputStream))
+    val inputStream = resources.openRawResource(xmlResourceId)
+    val reader: Reader = InputStreamReader(inputStream)
         val obj = xStream.fromXML(reader)
         reader.close()
         return obj
@@ -93,8 +93,8 @@ class XMLSerializer(private val inputStream: InputStream, private val outputStre
     @Throws(Exception::class)
     override fun write(obj: Any?) {
         val xStream = XStream(DomDriver())
-        val writer = BufferedWriter(OutputStreamWriter(outputStream))
-        xStream.toXML(obj, writer)
-        writer.close()
+        val outputStream = xStream.createObjectOutputStream(FileWriter(resources.toString())) // Note: You need to provide a valid file path here
+        outputStream.writeObject(obj)
+        outputStream.close()
     }
 }

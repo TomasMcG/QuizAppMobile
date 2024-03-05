@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import com.example.quizappmobile2.persistence.GsonHelper
 import com.example.quizappmobile2.view.CrudActivity
-import com.example.quizappmobile2.view.Rounds
 import controllers.RoundAPI
 
 import persistence.XMLSerializer
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         val quizButton = findViewById<Button>(R.id.playQuizButton)
         val fileName = "rounds.xml"
 
-        val inputStream: InputStream = resources.assets.open(fileName)
+     /*   val inputStream: InputStream = resources.assets.open(fileName)
         val outputStream: FileOutputStream = openFileOutput("example.txt", Context.MODE_PRIVATE)
         lateinit var rounds: RoundAPI
         try {
@@ -43,7 +43,13 @@ class MainActivity : ComponentActivity() {
         } finally {
             inputStream.close()
             outputStream.close()
-        }
+        }*/
+
+        val resources = resources // Assuming you are in an Activity or a Context
+        val xmlResourceId = R.xml.rounds // Replace with the actual resource ID of your XML file
+        val loadedRounds = GsonHelper.loadRoundsArray(this)
+        val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
+        val roundAPI = RoundAPI(xmlSerializer)
 
 
        /* val resources = resources // Assuming you are in an Activity or a Context
@@ -64,7 +70,7 @@ class MainActivity : ComponentActivity() {
 
 //        val rounds = RoundAPI(XMLSerializer(File("src/main/assets/rounds.xml")))
         val textViewResult: TextView = findViewById(R.id.textView)
-        textViewResult.text = rounds.listAllRounds()
+        textViewResult.text = roundAPI.listAllRounds()
 
         quizButton.setOnClickListener{
 //        textbox.text = "button was pressed."

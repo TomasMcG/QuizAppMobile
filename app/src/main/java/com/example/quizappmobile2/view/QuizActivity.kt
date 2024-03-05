@@ -2,6 +2,7 @@ package com.example.quizappmobile2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import com.example.quizappmobile2.persistence.GsonHelper
 import controllers.RoundAPI
@@ -39,6 +40,14 @@ class QuizActivity : AppCompatActivity() {
         val xmlSerializer = XMLSerializer(resources, xmlResourceId, loadedRounds)
         val roundAPI = RoundAPI(xmlSerializer)
         fillData(roundAPI)
+
+        val chooseRound = findViewById<TextView>(R.id.enterRoundIdBox)
+        val chooseRoundButton = findViewById<Button>(R.id.selectRound)
+        val correctAnswer = findViewById<TextView>(R.id.correctAnswerBox)
+        val correctAnswerButton = findViewById<Button>(R.id.confirmButton)
+
+        val questionsBox = findViewById<TextView>(R.id.QuestionTextAndId)
+        val possibleQuestionAnswers = findViewById<TextView>(R.id.PossibleAnswersBox)
 
         val result = roundAPI.listAllRounds()
         val textViewResult: TextView = findViewById(R.id.textView2)
